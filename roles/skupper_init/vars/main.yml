@@ -1,0 +1,7 @@
+---
+# vars file for skupper_init
+skupper_init_command:
+  - skupper
+  - init
+  - --platform
+  - "{{ platform }}"

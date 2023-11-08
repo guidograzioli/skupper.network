@@ -1,0 +1,53 @@
+---
+# tasks file for skupper_cli_install
+- name: Retrieving skupper releases
+  ansible.builtin.uri:
+    url: "{{ skupper_cli_install_latest_release_url }}"
+    method: GET
+    status_code: 200
+    body_format: json
+  register: latest_release
+  delay: 30
+  when: skupper_cli_install_version != 'latest'
+  ignore_errors: true
+
+- name: Determining system_facts
+  ansible.builtin.set_fact:
+    cli_version: >-
+      {{ latest_release.json.name if skupper_cli_install_version == 'latest' else skupper_cli_install_version }}
+
+- name: Ensure destination directory exists
+  ansible.builtin.file:
+    path: "{{ skupper_cli_install_location }}"
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Determining tarball
+  ansible.builtin.set_fact:
+    tarball: "skupper-cli-{{ cli_version if cli_version != '' else skupper_cli_install_version }}-{{ skupper_cli_install_os }}-{{ skupper_cli_install_arch }}.tgz"
+
+- name: Determining download info
+  ansible.builtin.set_fact:
+    download_url: "{{ skupper_cli_install_download_url_base }}/{{ cli_version }}/{{ tarball }}"
+
+- name: Download info
+  ansible.builtin.debug:
+    msg: "Downloading {{ skupper_cli_install_download_url_base }}/{{ cli_version }}/{{ tarball }} into {{ skupper_cli_install_location }}"
+
+- name: Downloading tar ball
+  ansible.builtin.unarchive:
+    src: "{{ download_url }}"
+    dest: "{{ skupper_cli_install_location }}"
+    remote_src: true
+
+- name: Verifying installation
+  ansible.builtin.stat:
+    path: "{{ skupper_cli_install_location }}/skupper"
+  register: skupper_bin
+
+- name: Skupper binary installed
+  ansible.builtin.fail:
+    msg: "Installation failed - {{ skupper_cli_install_location }}/skupper not found"
+  when: not skupper_bin.stat.exists

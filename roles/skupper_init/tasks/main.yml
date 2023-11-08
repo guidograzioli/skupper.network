@@ -1,0 +1,20 @@
+---
+# tasks file for skupper_init
+- name: Import platform specific validation tasks
+  ansible.builtin.include_tasks: "{{ platform }}-validate.yml"
+- name: Import platform specific tasks
+  ansible.builtin.include_tasks: "{{ platform }}-command.yml"
+
+# executing and validating result
+- name: Executing skupper init
+  ansible.builtin.command:
+    argv: "{{ skupper_init_command }}"
+  register: initStatus
+  changed_when: not initStatus.failed
+  failed_when: >
+    initStatus.failed and
+    "Skupper has already been initialized" not in initStatus.stderr_lines[0]
+
+# load site info after initialization
+- name: Loading site id
+  skupper.network.site_load:

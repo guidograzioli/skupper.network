@@ -1,0 +1,7 @@
+---
+# constants file for skupper_cli_install
+arch_values:
+  x86_64: "amd64"
+  arm64: "arm64"
+  arm32: "arm32"
+  i386: "i386"

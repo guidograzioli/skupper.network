@@ -1,0 +1,76 @@
+---
+# defaults file for skupper_init
+#
+# common flags
+#
+skupper_init_siteName: ""
+skupper_init_ingress: ""
+skupper_init_routerMode: ""
+skupper_init_labels: []
+skupper_init_routerLogging: ""
+skupper_init_routerDebugMode: ""
+skupper_init_timeout: 0
+skupper_init_enableFlowCollector: False
+skupper_init_enableConsole: False
+skupper_init_consoleAuth: ""
+skupper_init_consoleUser: ""
+skupper_init_consolePassword: ""
+skupper_init_flowCollectorRecordTtl: ""
+
+skupper_init_flags:
+  kubernetes:
+    ingressHost: ""
+    createNetworkPolicy: False
+    enableServiceSync: False
+    enableRestApi: False
+    enableClusterPermissions: False
+    enableSkupperEvents: True
+    consoleIngress: ""
+    annotations: []
+    ingressAnnotations: []
+    routerServiceAnnotations: []
+    controllerServiceAnnotations: []
+    routers: 1
+    routerCpu: ""
+    routerMemory: ""
+    routerCpuLimit: ""
+    routerMemoryLimit: ""
+    routerNodeSelector: ""
+    routerPodAffinity: ""
+    routerPodAntiaffinity: ""
+    routerIngressHost: ""
+    routerLoadBalancerIp: ""
+    controllerCpu: ""
+    controllerMemory: ""
+    controllerCpuLimit: ""
+    controllerMemoryLimit: ""
+    controllerNodeSelector: ""
+    controllerPodAffinity: ""
+    controllerPodAntiaffinity: ""
+    controllerIngressHost: ""
+    controllerLoadBalancerIp: ""
+    configSyncCpu: ""
+    configSyncMemory: ""
+    configSyncCpuLimit: ""
+    configSyncMemoryLimit: ""
+    flowCollectorCpu: ""
+    flowCollectorMemory: ""
+    flowCollectorCpuLimit: ""
+    flowCollectorMemoryLimit: ""
+    externalPrometheusServer: ""
+    prometheusAuth: ""
+    prometheusUser: ""
+    prometheusPassword: ""
+    prometheusCpu: ""
+    prometheusCpuLimit: ""
+    prometheusMemory: ""
+    prometheusMemoryLimit: ""
+    serviceSyncSiteTtl: ""
+  podman:
+    ingressHosts: []
+    ingressBindIps: []
+    bindPort: 55671
+    bindPortEdge: 45671
+    containerNetwork: "skupper"
+    podmanEndpoint: ""
+    bindPortFlowCollector: 8010
