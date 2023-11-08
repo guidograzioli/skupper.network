@@ -6,6 +6,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from __future__ import (absolute_import, division, print_function)
+__metaclass__ = type
 
 DOCUMENTATION = r'''
 ---
@@ -182,8 +183,6 @@ from ansible.module_utils.common.text.converters import to_native
 from ..module_utils.args import common_args
 from ..module_utils.skupper_cli import prepare_command
 from ..module_utils.types import Result
-
-__metaclass__ = type
 
 
 class Services:

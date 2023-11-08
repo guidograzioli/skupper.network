@@ -6,6 +6,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from __future__ import (absolute_import, division, print_function)
+__metaclass__ = type
 
 DOCUMENTATION = r'''
 ---
@@ -54,8 +55,6 @@ from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.common.text.converters import to_native
 from ..module_utils.args import add_fact, common_args
 from ..module_utils.types import Service, ServiceTarget
-
-__metaclass__ = type
 
 
 class ServicesLoader:
