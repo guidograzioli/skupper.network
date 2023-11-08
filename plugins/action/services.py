@@ -2,6 +2,8 @@ from ansible.utils.vars import merge_hash
 from . import BaseActionModule
 from ..module_utils.types import Service, ServiceTarget, ServiceParam
 
+from __future__ import (absolute_import, division, print_function)
+__metaclass__ = type
 
 class ActionModule(BaseActionModule):
 

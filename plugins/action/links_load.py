@@ -2,6 +2,7 @@ from ansible.utils.vars import merge_hash
 from . import BaseActionModule
 from ..module_utils.sites import get_sites
 
+from __future__ import (absolute_import, division, print_function)
 
 class ActionModule(BaseActionModule):
 

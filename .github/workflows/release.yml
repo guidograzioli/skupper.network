@@ -10,4 +10,3 @@ jobs:
       collection_fqcn: 'skupper.network'
     secrets:
       galaxy_token: ${{ secrets.ANSIBLE_GALAXY_API_KEY }}
-

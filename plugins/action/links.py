@@ -1,6 +1,8 @@
 from ansible.utils.vars import merge_hash
 from . import BaseActionModule
 
+from __future__ import (absolute_import, division, print_function)
+__metaclass__ = type
 
 class ActionModule(BaseActionModule):
 
