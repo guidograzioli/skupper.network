@@ -2,7 +2,6 @@
 - name: Converge
   hosts: all
   vars: 
-    skupper_cli_install_version: latest
     skupper_platform: podman
   roles:
     - role: skupper_cli_install

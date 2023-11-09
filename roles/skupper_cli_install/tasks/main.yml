@@ -8,7 +8,7 @@
     body_format: json
   register: latest_release
   delay: 30
-  when: skupper_cli_install_version != 'latest'
+  when: skupper_cli_install_version == 'latest'
   ignore_errors: true
 
 - name: Determining system_facts
