@@ -1,0 +1,328 @@
+
+.. Document meta
+
+:orphan:
+
+.. |antsibull-internal-nbsp| unicode:: 0xA0
+    :trim:
+
+.. meta::
+  :antsibull-docs: 2.5.0
+
+.. Anchors
+
+.. _ansible_collections.skupper.network.links_module:
+
+.. Anchors: short name for ansible.builtin
+
+.. Title
+
+links -- Update links based on provided links list
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. Collection note
+
+.. note::
+    This module is part of the `skupper.network collection <https://galaxy.ansible.com/ui/repo/published/skupper/network/>`_.
+
+    It is not included in ``ansible-core``.
+    To check whether it is installed, run :code:`ansible-galaxy collection list`.
+
+    To install it, use: :code:`ansible-galaxy collection install skupper.network`.
+    You need further requirements to be able to use this module,
+    see :ref:`Requirements <ansible_collections.skupper.network.links_module_requirements>` for details.
+
+    To use it in a playbook, specify: :code:`skupper.network.links`.
+
+.. version_added
+
+.. rst-class:: ansible-version-added
+
+New in skupper.network 1.1.0
+
+.. contents::
+   :local:
+   :depth: 1
+
+.. Deprecated
+
+
+Synopsis
+--------
+
+.. Description
+
+- Updates the links defined by the respective site, based on the links list defined through the host variables.
+- Existing links that cannot be mapped to an inventory host will be deleted.
+- Links with a corresponding token (provided by skupper\_token role) or manually through the token property will be created.
+- If a corresponding token cannot be found for a requested link, it will fail.
+
+.. note::
+    This module has a corresponding :ref:`action plugin <action_plugins>`.
+
+.. Aliases
+
+
+.. Requirements
+
+.. _ansible_collections.skupper.network.links_module_requirements:
+
+Requirements
+------------
+The below requirements are needed on the host that executes this module.
+
+- python \>= 3.9
+- kubectl if using kubernetes platform
+- podman v4+ if using podman as the site platform
+
+
+
+
+
+
+.. Options
+
+Parameters
+----------
+
+.. raw:: html
+
+  <table class="colwidths-auto ansible-option-table docutils align-default" style="width: 100%">
+  <thead>
+  <tr class="row-odd">
+    <th class="head"><p>Parameter</p></th>
+    <th class="head"><p>Comments</p></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="row-even">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-context"></div>
+      <p class="ansible-option-title"><strong>context</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-context" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>KUBECONFIG context to use</p>
+    </div></td>
+  </tr>
+  <tr class="row-odd">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create"></div>
+      <p class="ansible-option-title"><strong>create</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">list</span>
+        / <span class="ansible-option-elements">elements=dictionary</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>List of links to create for a given site</p>
+      <p>This list is automatically provided by the links plugin based on host variable named <em>links</em></p>
+      <p>More information on how to define a link can be found at the <em>skupper_link</em> role documentation</p>
+      <p>For links to be created the <em>skupper_token</em> role must have been invoked for the target host</p>
+    </div></td>
+  </tr>
+  <tr class="row-even">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create/cost"></div>
+      <p class="ansible-option-title"><strong>cost</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create/cost" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">integer</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>Cost of the link</p>
+    </div></td>
+  </tr>
+  <tr class="row-odd">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create/host"></div>
+      <p class="ansible-option-title"><strong>host</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create/host" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+        / <span class="ansible-option-required">required</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>The ansible_inventory hostname that the respective link is intending to use as a target</p>
+    </div></td>
+  </tr>
+  <tr class="row-even">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create/name"></div>
+      <p class="ansible-option-title"><strong>name</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create/name" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>Name of the link to be created</p>
+    </div></td>
+  </tr>
+  <tr class="row-odd">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create/token"></div>
+      <p class="ansible-option-title"><strong>token</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create/token" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>Token to use in case <em>skupper_token</em> role hasn&#x27;t been called (generated token is not available)</p>
+    </div></td>
+  </tr>
+
+  <tr class="row-even">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-delete"></div>
+      <p class="ansible-option-title"><strong>delete</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-delete" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">list</span>
+        / <span class="ansible-option-elements">elements=dictionary</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>List of link names to be deleted</p>
+      <p>Existing links must have been loaded earlier by calling <a href='../../skupper/network/links_load_module.html' class='module'>skupper.network.links_load</a> module</p>
+    </div></td>
+  </tr>
+  <tr class="row-odd">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-delete/name"></div>
+      <p class="ansible-option-title"><strong>name</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-delete/name" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+        / <span class="ansible-option-required">required</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>Name of the link to be deleted</p>
+    </div></td>
+  </tr>
+
+  <tr class="row-even">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-hostname"></div>
+      <p class="ansible-option-title"><strong>hostname</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-hostname" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>Ansible&#x27;s inventory_hostname used to represent the given Skupper site</p>
+      <p>This is automatically provided by the action plugin</p>
+    </div></td>
+  </tr>
+  <tr class="row-odd">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-kubeconfig"></div>
+      <p class="ansible-option-title"><strong>kubeconfig</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-kubeconfig" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>KUBECONFIG file to be used (defaults to ${HOME}/.kube/config)</p>
+    </div></td>
+  </tr>
+  <tr class="row-even">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-namespace"></div>
+      <p class="ansible-option-title"><strong>namespace</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-namespace" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>Kubernetes namespace to run the Skupper site</p>
+    </div></td>
+  </tr>
+  <tr class="row-odd">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-platform"></div>
+      <p class="ansible-option-title"><strong>platform</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-platform" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>Platform to be used (kubernetes or podman)</p>
+    </div></td>
+  </tr>
+  <tr class="row-even">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-podman_endpoint"></div>
+      <p class="ansible-option-title"><strong>podman_endpoint</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-podman_endpoint" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>Podman endpoint to use when managing a Skupper site</p>
+    </div></td>
+  </tr>
+  </tbody>
+  </table>
+
+
+
+.. Attributes
+
+
+.. Notes
+
+
+.. Seealso
+
+
+.. Examples
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+    
+    - name: Updating links
+      skupper.network.links:
+
+
+
+
+.. Facts
+
+
+.. Return values
+
+
+..  Status (Presently only deprecated)
+
+
+.. Authors
+
+Authors
+~~~~~~~
+
+- Fernando Giorgetti (@fgiorgetti)
+
+
+
+.. Extra links
+
+
+.. Parsing errors
+

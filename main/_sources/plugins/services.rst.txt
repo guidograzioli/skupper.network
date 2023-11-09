@@ -1,0 +1,574 @@
+
+.. Document meta
+
+:orphan:
+
+.. |antsibull-internal-nbsp| unicode:: 0xA0
+    :trim:
+
+.. meta::
+  :antsibull-docs: 2.5.0
+
+.. Anchors
+
+.. _ansible_collections.skupper.network.services_module:
+
+.. Anchors: short name for ansible.builtin
+
+.. Title
+
+services -- Update services based on provided services list
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. Collection note
+
+.. note::
+    This module is part of the `skupper.network collection <https://galaxy.ansible.com/ui/repo/published/skupper/network/>`_.
+
+    It is not included in ``ansible-core``.
+    To check whether it is installed, run :code:`ansible-galaxy collection list`.
+
+    To install it, use: :code:`ansible-galaxy collection install skupper.network`.
+    You need further requirements to be able to use this module,
+    see :ref:`Requirements <ansible_collections.skupper.network.services_module_requirements>` for details.
+
+    To use it in a playbook, specify: :code:`skupper.network.services`.
+
+.. version_added
+
+.. rst-class:: ansible-version-added
+
+New in skupper.network 1.2.0
+
+.. contents::
+   :local:
+   :depth: 1
+
+.. Deprecated
+
+
+Synopsis
+--------
+
+.. Description
+
+- Updates the services defined by the respective site, based on the services list defined through the host variables
+- The services plugin will generate a list of services (or targets) to be created and deleted
+- If targets have changed then the create and delete lists will have just the name and respective targets (no spec)
+
+.. note::
+    This module has a corresponding :ref:`action plugin <action_plugins>`.
+
+.. Aliases
+
+
+.. Requirements
+
+.. _ansible_collections.skupper.network.services_module_requirements:
+
+Requirements
+------------
+The below requirements are needed on the host that executes this module.
+
+- python \>= 3.9
+- kubectl if using kubernetes platform
+- podman v4+ if using podman as the site platform
+
+
+
+
+
+
+.. Options
+
+Parameters
+----------
+
+.. raw:: html
+
+  <table class="colwidths-auto ansible-option-table docutils align-default" style="width: 100%">
+  <thead>
+  <tr class="row-odd">
+    <th class="head"><p>Parameter</p></th>
+    <th class="head"><p>Comments</p></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="row-even">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-context"></div>
+      <p class="ansible-option-title"><strong>context</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-context" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>KUBECONFIG context to use</p>
+    </div></td>
+  </tr>
+  <tr class="row-odd">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create"></div>
+      <p class="ansible-option-title"><strong>create</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">list</span>
+        / <span class="ansible-option-elements">elements=dictionary</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>List of service definitions to be created</p>
+      <p>This list will be populated automatically by the action plugin based on the <em>services</em> definition</p>
+      <p>For more information on how to define services, read the <em>skupper_service</em> role documentation</p>
+    </div></td>
+  </tr>
+  <tr class="row-even">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create/labels"></div>
+      <p class="ansible-option-title"><strong>labels</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create/labels" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">list</span>
+        / <span class="ansible-option-elements">elements=string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>List of labels to be applied to the service</p>
+      <p>The format to use for each entry is: &lt;key&gt;=&lt;value&gt;</p>
+    </div></td>
+  </tr>
+  <tr class="row-odd">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create/name"></div>
+      <p class="ansible-option-title"><strong>name</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create/name" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+        / <span class="ansible-option-required">required</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>Service name</p>
+    </div></td>
+  </tr>
+  <tr class="row-even">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create/spec"></div>
+      <p class="ansible-option-title"><strong>spec</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create/spec" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">dictionary</span>
+        / <span class="ansible-option-required">required</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>Service specification provided by the action plugin based on the <em>services</em> definition</p>
+    </div></td>
+  </tr>
+  <tr class="row-odd">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create/spec/aggregate"></div>
+      <p class="ansible-option-title"><strong>aggregate</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create/spec/aggregate" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>Strategy to aggregate http responses</p>
+      <p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
+      <ul class="simple">
+        <li><p><code class="ansible-value literal notranslate ansible-option-choices-entry">&#34;json&#34;</code></p></li>
+        <li><p><code class="ansible-value literal notranslate ansible-option-choices-entry">&#34;multipart&#34;</code></p></li>
+      </ul>
+
+    </div></td>
+  </tr>
+  <tr class="row-even">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create/spec/containerName"></div>
+      <p class="ansible-option-title"><strong>containerName</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create/spec/containerName" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>Alternative container name to be used for proxy container</p>
+      <p>This option is only relevant on podman sites</p>
+    </div></td>
+  </tr>
+  <tr class="row-odd">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create/spec/eventChannel"></div>
+      <p class="ansible-option-title"><strong>eventChannel</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create/spec/eventChannel" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">boolean</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>If specified this service will be a channel for multicast events</p>
+      <p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
+      <ul class="simple">
+        <li><p><code class="ansible-value literal notranslate ansible-option-choices-entry">false</code></p></li>
+        <li><p><code class="ansible-value literal notranslate ansible-option-choices-entry">true</code></p></li>
+      </ul>
+
+    </div></td>
+  </tr>
+  <tr class="row-even">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create/spec/generateTlsSecrets"></div>
+      <p class="ansible-option-title"><strong>generateTlsSecrets</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create/spec/generateTlsSecrets" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">boolean</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>If enabled, service communication will be encrypted using TLS</p>
+      <p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
+      <ul class="simple">
+        <li><p><code class="ansible-value literal notranslate ansible-option-choices-entry">false</code></p></li>
+        <li><p><code class="ansible-value literal notranslate ansible-option-choices-entry">true</code></p></li>
+      </ul>
+
+    </div></td>
+  </tr>
+  <tr class="row-odd">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create/spec/hostIp"></div>
+      <p class="ansible-option-title"><strong>hostIp</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create/spec/hostIp" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>Host IP to be bound to the proxy container port(s)</p>
+      <p>This option is only relevant on podman sites</p>
+    </div></td>
+  </tr>
+  <tr class="row-even">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create/spec/hostPorts"></div>
+      <p class="ansible-option-title"><strong>hostPorts</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create/spec/hostPorts" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">list</span>
+        / <span class="ansible-option-elements">elements=string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>List of ports to be mapped to the container port</p>
+      <p>Format for each entry is: &lt;service-port&gt;:&lt;host-port&gt;</p>
+      <p>This option is only relevant on podman sites</p>
+    </div></td>
+  </tr>
+  <tr class="row-odd">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create/spec/ports"></div>
+      <p class="ansible-option-title"><strong>ports</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create/spec/ports" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">list</span>
+        / <span class="ansible-option-elements">elements=integer</span>
+        / <span class="ansible-option-required">required</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>List of ports</p>
+    </div></td>
+  </tr>
+  <tr class="row-even">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create/spec/protocol"></div>
+      <p class="ansible-option-title"><strong>protocol</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create/spec/protocol" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>Protocol to use</p>
+      <p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
+      <ul class="simple">
+        <li><p><code class="ansible-value literal notranslate ansible-option-default-bold"><strong>&#34;tcp&#34;</strong></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
+        <li><p><code class="ansible-value literal notranslate ansible-option-choices-entry">&#34;http&#34;</code></p></li>
+        <li><p><code class="ansible-value literal notranslate ansible-option-choices-entry">&#34;http2&#34;</code></p></li>
+      </ul>
+
+    </div></td>
+  </tr>
+
+  <tr class="row-odd">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create/targets"></div>
+      <p class="ansible-option-title"><strong>targets</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create/targets" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">list</span>
+        / <span class="ansible-option-elements">elements=dictionary</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>List of targets that the respective service definition will be bound to</p>
+    </div></td>
+  </tr>
+  <tr class="row-even">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create/targets/name"></div>
+      <p class="ansible-option-title"><strong>name</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create/targets/name" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+        / <span class="ansible-option-required">required</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>Name or identification of the chosen resource type</p>
+    </div></td>
+  </tr>
+  <tr class="row-odd">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create/targets/ports"></div>
+      <p class="ansible-option-title"><strong>ports</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create/targets/ports" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">list</span>
+        / <span class="ansible-option-elements">elements=string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>List of ports to be mapped to the from the service to the chosen target</p>
+      <p>Format for each entry is: &lt;service-port&gt;:&lt;target-resource-port&gt;</p>
+    </div></td>
+  </tr>
+  <tr class="row-even">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-create/targets/type"></div>
+      <p class="ansible-option-title"><strong>type</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-create/targets/type" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+        / <span class="ansible-option-required">required</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>Type of target to bind</p>
+      <p>Valid values for kubernetes: deployment, statefulset, service, deploymentconfig</p>
+      <p>Valid values for podman: host</p>
+    </div></td>
+  </tr>
+
+
+  <tr class="row-odd">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-delete"></div>
+      <p class="ansible-option-title"><strong>delete</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-delete" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">list</span>
+        / <span class="ansible-option-elements">elements=dictionary</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>List of services, labels or targets to be removed</p>
+      <p>This list will be populated automatically by the action plugin based on the <em>services</em> definition</p>
+      <p>It also requires that the <a href='../../skupper/network/services_load_module.html' class='module'>skupper.network.services_load</a> module is invoked first</p>
+    </div></td>
+  </tr>
+  <tr class="row-even">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-delete/labels"></div>
+      <p class="ansible-option-title"><strong>labels</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-delete/labels" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">list</span>
+        / <span class="ansible-option-elements">elements=string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>List of labels to be removed from service</p>
+      <p>The format to use for each entry is: &lt;key&gt;-</p>
+    </div></td>
+  </tr>
+  <tr class="row-odd">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-delete/name"></div>
+      <p class="ansible-option-title"><strong>name</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-delete/name" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+        / <span class="ansible-option-required">required</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>Service name to be deleted</p>
+    </div></td>
+  </tr>
+  <tr class="row-even">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-delete/targets"></div>
+      <p class="ansible-option-title"><strong>targets</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-delete/targets" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">list</span>
+        / <span class="ansible-option-elements">elements=dictionary</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>List of targets to unbind</p>
+    </div></td>
+  </tr>
+  <tr class="row-odd">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-delete/targets/name"></div>
+      <p class="ansible-option-title"><strong>name</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-delete/targets/name" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+        / <span class="ansible-option-required">required</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>Name or identification of the chosen resource type</p>
+    </div></td>
+  </tr>
+  <tr class="row-even">
+    <td><div class="ansible-option-indent"></div><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-delete/targets/type"></div>
+      <p class="ansible-option-title"><strong>type</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-delete/targets/type" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+        / <span class="ansible-option-required">required</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-indent-desc"></div><div class="ansible-option-indent-desc"></div><div class="ansible-option-cell">
+      <p>Type of target to bind</p>
+      <p>Valid values for kubernetes: deployment, statefulset, service, deploymentconfig</p>
+      <p>Valid values for podman: host</p>
+    </div></td>
+  </tr>
+
+
+  <tr class="row-odd">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-hostname"></div>
+      <p class="ansible-option-title"><strong>hostname</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-hostname" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>Ansible&#x27;s inventory_hostname used to represent the given Skupper site</p>
+      <p>This is automatically provided by the action plugin</p>
+    </div></td>
+  </tr>
+  <tr class="row-even">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-kubeconfig"></div>
+      <p class="ansible-option-title"><strong>kubeconfig</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-kubeconfig" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>KUBECONFIG file to be used (defaults to ${HOME}/.kube/config)</p>
+    </div></td>
+  </tr>
+  <tr class="row-odd">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-namespace"></div>
+      <p class="ansible-option-title"><strong>namespace</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-namespace" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>Kubernetes namespace to run the Skupper site</p>
+    </div></td>
+  </tr>
+  <tr class="row-even">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-platform"></div>
+      <p class="ansible-option-title"><strong>platform</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-platform" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>Platform to be used (kubernetes or podman)</p>
+    </div></td>
+  </tr>
+  <tr class="row-odd">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-podman_endpoint"></div>
+      <p class="ansible-option-title"><strong>podman_endpoint</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-podman_endpoint" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>Podman endpoint to use when managing a Skupper site</p>
+    </div></td>
+  </tr>
+  </tbody>
+  </table>
+
+
+
+.. Attributes
+
+
+.. Notes
+
+
+.. Seealso
+
+
+.. Examples
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+    
+    - name: Updating services
+      skupper.network.services:
+
+
+
+
+.. Facts
+
+
+.. Return values
+
+
+..  Status (Presently only deprecated)
+
+
+.. Authors
+
+Authors
+~~~~~~~
+
+- Fernando Giorgetti (@fgiorgetti)
+
+
+
+.. Extra links
+
+
+.. Parsing errors
+

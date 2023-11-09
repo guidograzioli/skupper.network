@@ -1,0 +1,13 @@
+Plugin Index
+============
+
+.. toctree::
+   :caption: modules plugins
+   :maxdepth: 0
+
+   links
+   links_load
+   services
+   services_load
+   site_load
+

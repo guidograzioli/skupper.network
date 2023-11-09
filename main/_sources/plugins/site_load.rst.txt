@@ -1,0 +1,258 @@
+
+.. Document meta
+
+:orphan:
+
+.. |antsibull-internal-nbsp| unicode:: 0xA0
+    :trim:
+
+.. meta::
+  :antsibull-docs: 2.5.0
+
+.. Anchors
+
+.. _ansible_collections.skupper.network.site_load_module:
+
+.. Anchors: short name for ansible.builtin
+
+.. Title
+
+site_load -- Loads site information as ansible facts into the respective host
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+.. Collection note
+
+.. note::
+    This module is part of the `skupper.network collection <https://galaxy.ansible.com/ui/repo/published/skupper/network/>`_.
+
+    It is not included in ``ansible-core``.
+    To check whether it is installed, run :code:`ansible-galaxy collection list`.
+
+    To install it, use: :code:`ansible-galaxy collection install skupper.network`.
+    You need further requirements to be able to use this module,
+    see :ref:`Requirements <ansible_collections.skupper.network.site_load_module_requirements>` for details.
+
+    To use it in a playbook, specify: :code:`skupper.network.site_load`.
+
+.. version_added
+
+.. rst-class:: ansible-version-added
+
+New in skupper.network 1.1.0
+
+.. contents::
+   :local:
+   :depth: 1
+
+.. Deprecated
+
+
+Synopsis
+--------
+
+.. Description
+
+- Loads Skupper site information as a hostvar named 'site'. It contains the site name, site id and inventory hostname related to it. This 'site' info can be used by modules to map runtime information of a skupper site to an ansible host defined through the inventory file.
+  Kubernetes options can be set through host variables (kubeconfig, context, namespace). Podman endpoint can be customized through init.podmanEndpoint host variable.
+
+.. note::
+    This module has a corresponding :ref:`action plugin <action_plugins>`.
+
+.. Aliases
+
+
+.. Requirements
+
+.. _ansible_collections.skupper.network.site_load_module_requirements:
+
+Requirements
+------------
+The below requirements are needed on the host that executes this module.
+
+- python \>= 3.9
+- kubectl if using kubernetes platform
+- podman v4+ if using podman as the site platform
+
+
+
+
+
+
+.. Options
+
+Parameters
+----------
+
+.. raw:: html
+
+  <table class="colwidths-auto ansible-option-table docutils align-default" style="width: 100%">
+  <thead>
+  <tr class="row-odd">
+    <th class="head"><p>Parameter</p></th>
+    <th class="head"><p>Comments</p></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="row-even">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-context"></div>
+      <p class="ansible-option-title"><strong>context</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-context" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>KUBECONFIG context to use</p>
+    </div></td>
+  </tr>
+  <tr class="row-odd">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-hostname"></div>
+      <p class="ansible-option-title"><strong>hostname</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-hostname" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>Ansible&#x27;s inventory_hostname used to represent the given Skupper site</p>
+      <p>This is automatically provided by the action plugin</p>
+    </div></td>
+  </tr>
+  <tr class="row-even">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-kubeconfig"></div>
+      <p class="ansible-option-title"><strong>kubeconfig</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-kubeconfig" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>KUBECONFIG file to be used (defaults to ${HOME}/.kube/config)</p>
+    </div></td>
+  </tr>
+  <tr class="row-odd">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-namespace"></div>
+      <p class="ansible-option-title"><strong>namespace</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-namespace" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>Kubernetes namespace to run the Skupper site</p>
+    </div></td>
+  </tr>
+  <tr class="row-even">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-platform"></div>
+      <p class="ansible-option-title"><strong>platform</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-platform" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>Platform to be used (kubernetes or podman)</p>
+    </div></td>
+  </tr>
+  <tr class="row-odd">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="parameter-podman_endpoint"></div>
+      <p class="ansible-option-title"><strong>podman_endpoint</strong></p>
+      <a class="ansibleOptionLink" href="#parameter-podman_endpoint" title="Permalink to this option"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">string</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>Podman endpoint to use when managing a Skupper site</p>
+    </div></td>
+  </tr>
+  </tbody>
+  </table>
+
+
+
+.. Attributes
+
+
+.. Notes
+
+
+.. Seealso
+
+
+.. Examples
+
+Examples
+--------
+
+.. code-block:: yaml+jinja
+
+    
+    - name: Loading site information
+      skupper.network.site_load:
+
+
+
+
+.. Facts
+
+
+.. Return values
+
+Return Values
+-------------
+Common return values are documented :ref:`here <common_return_values>`, the following are the fields unique to this module:
+
+.. raw:: html
+
+  <table class="colwidths-auto ansible-option-table docutils align-default" style="width: 100%">
+  <thead>
+  <tr class="row-odd">
+    <th class="head"><p>Key</p></th>
+    <th class="head"><p>Description</p></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="row-even">
+    <td><div class="ansible-option-cell">
+      <div class="ansibleOptionAnchor" id="return-site"></div>
+      <p class="ansible-option-title"><strong>site</strong></p>
+      <a class="ansibleOptionLink" href="#return-site" title="Permalink to this return value"></a>
+      <p class="ansible-option-type-line">
+        <span class="ansible-option-type">dictionary</span>
+      </p>
+    </div></td>
+    <td><div class="ansible-option-cell">
+      <p>Skupper site information</p>
+      <p class="ansible-option-line"><strong class="ansible-option-returned-bold">Returned:</strong> always</p>
+      <p class="ansible-option-line ansible-option-sample"><strong class="ansible-option-sample-bold">Sample:</strong> <code class="ansible-value literal notranslate ansible-option-sample">{&#34;site&#34;: {&#34;host&#34;: &#34;host-a&#34;, &#34;id&#34;: &#34;53899d80-1ae6-11ee-be28-1e9341abe0db&#34;, &#34;name&#34;: &#34;site-a&#34;}}</code></p>
+    </div></td>
+  </tr>
+  </tbody>
+  </table>
+
+
+
+..  Status (Presently only deprecated)
+
+
+.. Authors
+
+Authors
+~~~~~~~
+
+- Fernando Giorgetti (@fgiorgetti)
+
+
+
+.. Extra links
+
+
+.. Parsing errors
+
