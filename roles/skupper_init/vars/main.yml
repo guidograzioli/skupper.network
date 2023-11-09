@@ -4,4 +4,4 @@ skupper_init_command:
   - skupper
   - init
   - --platform
-  - "{{ platform }}"
+  - "{{ skupper_platform }}"

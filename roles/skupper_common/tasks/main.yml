@@ -6,5 +6,5 @@
 
 - name: Validating skupper platform
   ansible.builtin.fail:
-    msg: "Invalid platform - valid platforms: {{ valid_platforms }}"
-  when: platform not in valid_platforms
+    msg: "Invalid platform - valid platforms: {{ skupper_valid_platforms }}"
+  when: platform not in skupper_valid_platforms

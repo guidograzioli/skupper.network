@@ -4,7 +4,7 @@
       - skupper
       - update
       - --platform
-      - "{{ platform }}"
+      - "{{ skupper_platform }}"
 
 - name: Adding --force-restart
   ansible.builtin.set_fact:

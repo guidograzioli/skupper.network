@@ -1,9 +1,9 @@
 ---
 # tasks file for skupper_init
 - name: Import platform specific validation tasks
-  ansible.builtin.include_tasks: "{{ platform }}-validate.yml"
+  ansible.builtin.include_tasks: "{{ skupper_platform }}-validate.yml"
 - name: Import platform specific tasks
-  ansible.builtin.include_tasks: "{{ platform }}-command.yml"
+  ansible.builtin.include_tasks: "{{ skupper_platform }}-command.yml"
 
 # executing and validating result
 - name: Executing skupper init

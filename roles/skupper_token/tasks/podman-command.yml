@@ -5,7 +5,7 @@
       - token
       - create
       - --platform
-      - "{{ platform }}"
+      - "{{ skupper_platform }}"
 
 - name: Adding --name
   ansible.builtin.set_fact:

@@ -1,15 +1,7 @@
 ---
 # tasks file for skupper_update
-- name: Kubernetes tasks
-  ansible.builtin.include_tasks: kube-tasks.yml
-  when: platform == 'kubernetes'
-#
-# Podman update has not been implemented
-#
-# - name: Podman tasks
-#   ansible.builtin.include_tasks: podman-tasks.yml
-#   when: platform == 'podman'
-
+- name: Include platform specific tasks
+  ansible.builtin.include_tasks: "{{ skupper_platform }}-tasks.yml"
 
 # executing and validating result
 - name: Executing skupper update
