@@ -113,7 +113,7 @@ as the `init` field.
 
 ```yaml
   rhel9:
-    platform: "podman"
+    skupper_platform: "podman"
     init:
       ingressHosts:
         - 192.168.122.1
