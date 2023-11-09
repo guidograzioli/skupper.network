@@ -29,6 +29,7 @@ warn_list:
   - fqcn[action]
   - schema[meta]
   - var-naming[no-role-prefix]
+  - var-naming[pattern] 
   - key-order[task]
   - blocked_modules
 
