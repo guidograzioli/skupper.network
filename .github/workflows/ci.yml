@@ -22,6 +22,9 @@ jobs:
               "python_version": "2.7"
             },
             {
+              "python_version": "3.8"
+            },
+            {
               "ansible_version": "stable-2.9"
             },
             {
