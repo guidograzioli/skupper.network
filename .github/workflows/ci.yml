@@ -28,18 +28,3 @@ jobs:
               "python_version": "3.9"
             }
           ]
-      sanity_includes: >-
-          [
-            {
-              "python_version": "3.11"
-              "ansible_version": "stable-2.14"
-            },
-            {
-              "python_version": "3.11"
-              "ansible_version": "milestone"
-            },
-            {
-              "python_version": "3.11"
-              "ansible_version": "devel"
-            }
-          ]
