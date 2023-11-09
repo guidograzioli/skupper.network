@@ -16,3 +16,21 @@ jobs:
       fqcn: 'skupper/network'
       molecule_tests: >-
           [ "default" ]
+      sanity_excludes: >-
+          [
+            {
+              "ansible-version": "stable-2.9"
+            },
+            {
+              "ansible-version": "stable-2.11"
+            },
+            {
+              "python": "2.7"
+            },
+            {
+              "python": "3.8"
+            },
+            {
+              "python": "3.9"
+            }
+          ]
