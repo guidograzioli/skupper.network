@@ -1,91 +1,35 @@
 ---
-- name: Adding --site-name
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--site-name', skupper_init_siteName] }}"
-  when: skupper_init_siteName is defined
-
-- name: Adding --ingress
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--ingress', skupper_init_ingress] }}"
-  when: skupper_init_ingress is defined
-
 - name: Adding --ingress-host
   ansible.builtin.set_fact:
     skupper_init_command: "{{ skupper_init_command + ['--ingress-host', item] }}"
-  with_items: "{{ skupper_init_flags['podman'].ingressHosts }}"
-  when: skupper_init_flags['podman'].ingressHosts is defined and skupper_init_flags['podman'].ingressHosts | length() > 0
+  with_items: "{{ skupper_init_podman_ingressHosts }}"
+  when: skupper_init_podman_ingressHosts is defined and skupper_init_podman_ingressHosts | length() > 0
 
 - name: Adding --ingress-bind-ip
   ansible.builtin.set_fact:
     skupper_init_command: "{{ skupper_init_command + ['--ingress-bind-ip', item] }}"
-  with_items: "{{ skupper_init_flags['podman'].ingressBindIps }}"
-  when: skupper_init_flags['podman'].ingressBindIps is defined and skupper_init_flags['podman'].ingressBindIps | length() > 0
+  with_items: "{{ skupper_init_podman_ingressBindIps }}"
+  when: skupper_init_podman_ingressBindIps is defined and skupper_init_podman_ingressBindIps | length() > 0
 
 - name: Adding --bind-port
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--bind-port', skupper_init_flags['podman'].bindPort] }}"
-  when: skupper_init_flags['podman'].bindPort is defined
+    skupper_init_command: "{{ skupper_init_command + ['--bind-port', skupper_init_podman_bindPort] }}"
+  when: skupper_init_podman_bindPort is defined
 
 - name: Adding --bind-port-edge
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--bind-port-edge', skupper_init_flags['podman'].bindPortEdge] }}"
-  when: skupper_init_flags['podman'].bindPortEdge is defined
-
-- name: Adding --labels
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--labels', item] }}"
-  with_items: "{{ skupper_init_labels }}"
-  when: skupper_init_labels is defined and skupper_init_labels | length() > 0
-
-- name: Adding --router-logging
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--router-logging', skupper_init_routerLogging] }}"
-  when: skupper_init_routerLogging is defined
-
-- name: Adding --router-debug-mode
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--router-debug-mode', skupper_init_routerDebugMode] }}"
-  when: skupper_init_routerDebugMode is defined
+    skupper_init_command: "{{ skupper_init_command + ['--bind-port-edge', skupper_init_podman_bindPortEdge] }}"
+  when: skupper_init_podman_bindPortEdge is defined
 
 - name: Adding --container-network
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--container-network', skupper_init_flags['podman'].containerNetwork] }}"
-  when: skupper_init_flags['podman'].containerNetwork is defined
+    skupper_init_command: "{{ skupper_init_command + ['--container-network', skupper_init_podman_containerNetwork] }}"
+  when: skupper_init_podman_containerNetwork is defined
 
 - name: Adding --podman-endpoint
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--podman-endpoint', skupper_init_flags['podman'].podmanEndpoint] }}"
-  when: skupper_init_flags['podman'].podmanEndpoint is defined
-
-- name: Adding --enable-console
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--enable-console=' + skupper_init_enableConsole] }}"
-  when: skupper_init_enableConsole is defined
-
-- name: Adding --console-auth
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--console-auth', skupper_init_consoleAuth] }}"
-  when: skupper_init_consoleAuth is defined
-
-- name: Adding --console-user
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--console-user', skupper_init_consoleUser] }}"
-  when: skupper_init_consoleUser is defined
-
-- name: Adding --console-password
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--console-password', skupper_init_consolePassword] }}"
-  when: skupper_init_consolePassword is defined
-
-- name: Adding --enable-flow-collector
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--enable-flow-collector=' + skupper_init_enableFlowCollector] }}"
-  when: skupper_init_enableFlowCollector is defined
-
-- name: Adding --flow-collector-record-ttl
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--flow-collector-record-ttl', skupper_init_flowCollectorRecordTtl] }}"
-  when: skupper_init_flowCollectorRecordTtl is defined
+    skupper_init_command: "{{ skupper_init_command + ['--podman-endpoint', skupper_init_podman_podmanEndpoint] }}"
+  when: skupper_init_podman_podmanEndpoint is defined
 
 - name: Adding --bind-port-flow-collector
   ansible.builtin.set_fact:

@@ -1,4 +1,70 @@
 ---
+- name: Adding --site-name
+  ansible.builtin.set_fact:
+    skupper_init_command: "{{ skupper_init_command + ['--site-name', skupper_init_siteName] }}"
+  when: skupper_init_siteName is defined
+
+- name: Adding --ingress
+  ansible.builtin.set_fact:
+    skupper_init_command: "{{ skupper_init_command + ['--ingress', skupper_init_ingress] }}"
+  when: skupper_init_ingress is defined
+
+- name: Adding --router-mode
+  ansible.builtin.set_fact:
+    skupper_init_command: "{{ skupper_init_command + ['--router-mode', skupper_init_routerMode] }}"
+  when: skupper_init_routerMode is defined
+
+- name: Adding --labels
+  ansible.builtin.set_fact:
+    skupper_init_command: "{{ skupper_init_command + ['--labels', item] }}"
+  with_items: "{{ skupper_init_labels }}"
+  when: skupper_init_labels is defined and skupper_init_labels | length() > 0
+
+- name: Adding --router-logging
+  ansible.builtin.set_fact:
+    skupper_init_command: "{{ skupper_init_command + ['--router-logging', skupper_init_routerLogging] }}"
+  when: skupper_init_routerLogging is defined
+
+- name: Adding --router-debug-mode
+  ansible.builtin.set_fact:
+    skupper_init_command: "{{ skupper_init_command + ['--router-debug-mode', skupper_init_routerDebugMode] }}"
+  when: skupper_init_routerDebugMode is defined
+
+- name: Adding --timeout
+  ansible.builtin.set_fact:
+    skupper_init_command: "{{ skupper_init_command + ['--timeout', skupper_init_timeout] }}"
+  when: skupper_init_timeout is defined
+
+- name: Adding --enable-console
+  ansible.builtin.set_fact:
+    skupper_init_command: "{{ skupper_init_command + ['--enable-console=' + init.enableConsole] }}"
+  when: skupper_init_kubernetes_enableConsole is defined
+
+- name: Adding --enable-flow-collector
+  ansible.builtin.set_fact:
+    skupper_init_command: "{{ skupper_init_command + ['--enable-flow-collector=' + init.enableFlowCollector] }}"
+  when: skupper_init_kubernetes_enableFlowCollector is defined
+
+- name: Adding --console-auth
+  ansible.builtin.set_fact:
+    skupper_init_command: "{{ skupper_init_command + ['--console-auth', skupper_init_consoleAuth] }}"
+  when: skupper_init_consoleAuth is defined
+
+- name: Adding --console-user
+  ansible.builtin.set_fact:
+    skupper_init_command: "{{ skupper_init_command + ['--console-user', skupper_init_consoleUser] }}"
+  when: skupper_init_consoleUser is defined
+
+- name: Adding --console-password
+  ansible.builtin.set_fact:
+    skupper_init_command: "{{ skupper_init_command + ['--console-password', skupper_init_consolePassword] }}"
+  when: skupper_init_consolePassword is defined
+
+- name: Adding --flow-collector-record-ttl
+  ansible.builtin.set_fact:
+    skupper_init_command: "{{ skupper_init_command + ['--flow-collector-record-ttl', skupper_init_flowCollectorRecordTtl] }}"
+  when: skupper_init_flowCollectorRecordTtl is defined
+
 # tasks file for skupper_init
 - name: Import platform specific validation tasks
   ansible.builtin.include_tasks: "{{ skupper_platform }}-validate.yml"

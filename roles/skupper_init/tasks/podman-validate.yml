@@ -1,7 +1,13 @@
 ---
+- name: "Validating ingress"
+  ansible.builtin.fail:
+    msg: "Ingress host must be 'none' or 'external'"
+  when:
+    - skupper_init_ingress not in ['none','external']
+
 - name: "Validating ingress host"
   ansible.builtin.fail:
     msg: "Ingress host is required"
   when:
-    - skupper_init_ingress is not defined or skupper_init_ingress != 'none'
-    - skupper_init_flags['podman'].ingressHosts | length < 1
+    - skupper_init_ingress != 'none'
+    - skupper_init_podman_ingressHosts | length < 1

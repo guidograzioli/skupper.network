@@ -1,1 +1,6 @@
 ---
+- name: "Validating ingress"
+  ansible.builtin.fail:
+    msg: "Ingress host must be one of [route|loadbalancer|nodeport|nginx-ingress-v1|contour-http-proxy|ingress|none]"
+  when:
+    - skupper_init_ingress not in ['route','loadbalancer','nodeport','nginx-ingress-v1','contour-http-proxy','ingress','none']

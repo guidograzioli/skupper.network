@@ -3,6 +3,7 @@
   hosts: all
   vars: 
     skupper_platform: podman
+    skupper_init_podman_ingressHosts: [ instance ]
   roles:
     - role: skupper_cli_install
     - role: skupper_init

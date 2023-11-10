@@ -17,60 +17,59 @@ skupper_init_consoleUser: ""
 skupper_init_consolePassword: ""
 skupper_init_flowCollectorRecordTtl: ""
 
-skupper_init_flags:
-  kubernetes:
-    ingressHost: ""
-    createNetworkPolicy: False
-    enableServiceSync: False
-    enableRestApi: False
-    enableClusterPermissions: False
-    enableSkupperEvents: True
-    consoleIngress: ""
-    annotations: []
-    ingressAnnotations: []
-    routerServiceAnnotations: []
-    controllerServiceAnnotations: []
-    routers: 1
-    routerCpu: ""
-    routerMemory: ""
-    routerCpuLimit: ""
-    routerMemoryLimit: ""
-    routerNodeSelector: ""
-    routerPodAffinity: ""
-    routerPodAntiaffinity: ""
-    routerIngressHost: ""
-    routerLoadBalancerIp: ""
-    controllerCpu: ""
-    controllerMemory: ""
-    controllerCpuLimit: ""
-    controllerMemoryLimit: ""
-    controllerNodeSelector: ""
-    controllerPodAffinity: ""
-    controllerPodAntiaffinity: ""
-    controllerIngressHost: ""
-    controllerLoadBalancerIp: ""
-    configSyncCpu: ""
-    configSyncMemory: ""
-    configSyncCpuLimit: ""
-    configSyncMemoryLimit: ""
-    flowCollectorCpu: ""
-    flowCollectorMemory: ""
-    flowCollectorCpuLimit: ""
-    flowCollectorMemoryLimit: ""
-    externalPrometheusServer: ""
-    prometheusAuth: ""
-    prometheusUser: ""
-    prometheusPassword: ""
-    prometheusCpu: ""
-    prometheusCpuLimit: ""
-    prometheusMemory: ""
-    prometheusMemoryLimit: ""
-    serviceSyncSiteTtl: ""
-  podman:
-    ingressHosts: []
-    ingressBindIps: []
-    bindPort: 55671
-    bindPortEdge: 45671
-    containerNetwork: "skupper"
-    podmanEndpoint: ""
-    bindPortFlowCollector: 8010
+
+skupper_init_kubernetes_ingressHost: ""
+skupper_init_kubernetes_createNetworkPolicy: False
+skupper_init_kubernetes_enableServiceSync: False
+skupper_init_kubernetes_enableRestApi: False
+skupper_init_kubernetes_enableClusterPermissions: False
+skupper_init_kubernetes_enableSkupperEvents: True
+skupper_init_kubernetes_consoleIngress: ""
+skupper_init_kubernetes_annotations: []
+skupper_init_kubernetes_ingressAnnotations: []
+skupper_init_kubernetes_routerServiceAnnotations: []
+skupper_init_kubernetes_controllerServiceAnnotations: []
+skupper_init_kubernetes_routers: 1
+skupper_init_kubernetes_routerCpu: ""
+skupper_init_kubernetes_routerMemory: ""
+skupper_init_kubernetes_routerCpuLimit: ""
+skupper_init_kubernetes_routerMemoryLimit: ""
+skupper_init_kubernetes_routerNodeSelector: ""
+skupper_init_kubernetes_routerPodAffinity: ""
+skupper_init_kubernetes_routerPodAntiaffinity: ""
+skupper_init_kubernetes_routerIngressHost: ""
+skupper_init_kubernetes_routerLoadBalancerIp: ""
+skupper_init_kubernetes_controllerCpu: ""
+skupper_init_kubernetes_controllerMemory: ""
+skupper_init_kubernetes_controllerCpuLimit: ""
+skupper_init_kubernetes_controllerMemoryLimit: ""
+skupper_init_kubernetes_controllerNodeSelector: ""
+skupper_init_kubernetes_controllerPodAffinity: ""
+skupper_init_kubernetes_controllerPodAntiaffinity: ""
+skupper_init_kubernetes_controllerIngressHost: ""
+skupper_init_kubernetes_controllerLoadBalancerIp: ""
+skupper_init_kubernetes_configSyncCpu: ""
+skupper_init_kubernetes_configSyncMemory: ""
+skupper_init_kubernetes_configSyncCpuLimit: ""
+skupper_init_kubernetes_configSyncMemoryLimit: ""
+skupper_init_kubernetes_flowCollectorCpu: ""
+skupper_init_kubernetes_flowCollectorMemory: ""
+skupper_init_kubernetes_flowCollectorCpuLimit: ""
+skupper_init_kubernetes_flowCollectorMemoryLimit: ""
+skupper_init_kubernetes_externalPrometheusServer: ""
+skupper_init_kubernetes_prometheusAuth: ""
+skupper_init_kubernetes_prometheusUser: ""
+skupper_init_kubernetes_prometheusPassword: ""
+skupper_init_kubernetes_prometheusCpu: ""
+skupper_init_kubernetes_prometheusCpuLimit: ""
+skupper_init_kubernetes_prometheusMemory: ""
+skupper_init_kubernetes_prometheusMemoryLimit: ""
+skupper_init_kubernetes_serviceSyncSiteTtl: ""
+
+skupper_init_podman_ingressHosts: []
+skupper_init_podman_ingressBindIps: []
+skupper_init_podman_bindPort: 55671
+skupper_init_podman_bindPortEdge: 45671
+skupper_init_podman_containerNetwork: "skupper"
+skupper_init_podman_podmanEndpoint: ""
+skupper_init_podman_bindPortFlowCollector: 8010

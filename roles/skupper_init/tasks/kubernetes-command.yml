@@ -2,319 +2,253 @@
 - name: Adding --kubeconfig
   ansible.builtin.set_fact:
     skupper_init_command: "{{ skupper_init_command + ['--kubeconfig', skupper_kubeconfig] }}"
-  when: kubeconfig is defined and kubeconfig | length() > 0
+  when: skupper_kubeconfig | length() > 0
 
 - name: Adding --context
   ansible.builtin.set_fact:
     skupper_init_command: "{{ skupper_init_command + ['--context', skupper_context] }}"
-  when: context is defined and context | length() > 0
+  when: skupper_context | length() > 0
 
 - name: Adding --namespace
   ansible.builtin.set_fact:
     skupper_init_command: "{{ skupper_init_command + ['--namespace', skupper_namespace] }}"
-  when: namespace is defined and namespace | length() > 0
-
-- name: Adding --site-name
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--site-name', init.siteName] }}"
-  when: init['siteName'] is defined
-
-- name: Adding --ingress
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--ingress', init.ingress] }}"
-  when: init['ingress'] is defined
-
-- name: Adding --router-mode
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--router-mode', init.routerMode] }}"
-  when: init['routerMode'] is defined
-
-- name: Adding --labels
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--labels', item] }}"
-  with_items: "{{ init['labels'] }}"
-  when: init['labels'] is defined and init['labels'] | length() > 0
-
-- name: Adding --router-logging
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--router-logging', init.routerLogging] }}"
-  when: init['routerLogging'] is defined
-
-- name: Adding --router-debug-mode
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--router-debug-mode', init.routerDebugMode] }}"
-  when: init['routerDebugMode'] is defined
-
-- name: Adding --timeout
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--timeout', init.timeout] }}"
-  when: init['timeout'] is defined
+  when: skupper_namespace | length() > 0
 
 - name: Adding --ingress-host
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--ingress-host', init.ingressHost] }}"
-  when: init['ingressHost'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--ingress-host', skupper_init_kubernetes_ingressHost] }}"
+  when: skupper_init_kubernetes_ingressHost is defined
 
 - name: Adding --create-network-policy
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--create-network-policy=' + init.createNetworkPolicy] }}"
-  when: init['createNetworkPolicy'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--create-network-policy=' + skupper_init_kubernetes_createNetworkPolicy] }}"
+  when: skupper_init_kubernetes_createNetworkPolicy is defined
 
 - name: Adding --enable-service-sync
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--enable-service-sync=' + init.enableServiceSync] }}"
-  when: init['enableServiceSync'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--enable-service-sync=' + skupper_init_kubernetes_enableServiceSync] }}"
+  when: skupper_init_kubernetes_enableServiceSync is defined
 
 - name: Adding --service-sync-site-ttl
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--service-sync-site-ttl', init.serviceSyncSiteTtl] }}"
-  when: init['serviceSyncSiteTtl'] is defined
-
-- name: Adding --enable-console
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--enable-console=' + init.enableConsole] }}"
-  when: init['enableConsole'] is defined
-
-- name: Adding --enable-flow-collector
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--enable-flow-collector=' + init.enableFlowCollector] }}"
-  when: init['enableFlowCollector'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--service-sync-site-ttl', skupper_init_kubernetes_serviceSyncSiteTtl] }}"
+  when: skupper_init_kubernetes_serviceSyncSiteTtl is defined
 
 - name: Adding --enable-rest-api
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--enable-rest-api=' + init.enableRestApi] }}"
-  when: init['enableRestApi'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--enable-rest-api=' + skupper_init_kubernetes_enableRestApi] }}"
+  when: skupper_init_kubernetes_enableRestApi is defined
 
 - name: Adding --enable-cluster-permissions
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--enable-cluster-permissions=' + init.enableClusterPermissions] }}"
-  when: init['enableClusterPermissions'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--enable-cluster-permissions=' + skupper_init_kubernetes_enableClusterPermissions] }}"
+  when: skupper_init_kubernetes_enableClusterPermissions is defined
 
 - name: Adding --enable-skupper-events
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--enable-skupper-events=' + init.enableSkupperEvents] }}"
-  when: init['enableSkupperEvents'] is defined
-
-- name: Adding --console-auth
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--console-auth', init.consoleAuth] }}"
-  when: init['consoleAuth'] is defined
-
-- name: Adding --console-user
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--console-user', init.consoleUser] }}"
-  when: init['consoleUser'] is defined
-
-- name: Adding --console-password
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--console-password', init.consolePassword] }}"
-  when: init['consolePassword'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--enable-skupper-events=' + skupper_init_kubernetes_enableSkupperEvents] }}"
+  when: skupper_init_kubernetes_enableSkupperEvents is defined
 
 - name: Adding --console-ingress
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--console-ingress', init.consoleIngress] }}"
-  when: init['consoleIngress'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--console-ingress', skupper_init_kubernetes_consoleIngress] }}"
+  when: skupper_init_kubernetes_consoleIngress is defined
 
 - name: Adding --annotations
   ansible.builtin.set_fact:
     skupper_init_command: "{{ skupper_init_command + ['--annotations', item] }}"
-  with_items: "{{ init['annotations'] }}"
-  when: init['annotations'] is defined and init['annotations'] | length() > 0
+  with_items: "{{ skupper_init_kubernetes_annotations }}"
+  when: skupper_init_kubernetes_annotations | length() > 0
 
 - name: Adding --ingress-annotations
   ansible.builtin.set_fact:
     skupper_init_command: "{{ skupper_init_command + ['--ingress-annotations', item] }}"
-  with_items: "{{ init['ingressAnnotations'] }}"
-  when: init['ingressAnnotations'] is defined and init['ingressAnnotations'] | length() > 0
+  with_items: "{{ skupper_init_kubernetes_ingressAnnotations }}"
+  when: skupper_init_kubernetes_ingressAnnotations | length() > 0
 
 - name: Adding --router-service-annotations
   ansible.builtin.set_fact:
     skupper_init_command: "{{ skupper_init_command + ['--router-service-annotations', item] }}"
-  with_items: "{{ init['routerServiceAnnotations'] }}"
-  when: init['routerServiceAnnotations'] is defined and init['routerServiceAnnotations'] | length() > 0
+  with_items: "{{ skupper_init_kubernetes_routerServiceAnnotations }}"
+  when: skupper_init_kubernetes_routerServiceAnnotations | length() > 0
 
 - name: Adding --controller-service-annotations
   ansible.builtin.set_fact:
     skupper_init_command: "{{ skupper_init_command + ['--controller-service-annotations', item] }}"
-  with_items: "{{ init['controllerServiceAnnotations'] }}"
-  when: init['controllerServiceAnnotations'] is defined and init['controllerServiceAnnotations'] | length() > 0
+  with_items: "{{ skupper_init_kubernetes_controllerServiceAnnotations }}"
+  when: skupper_init_kubernetes_controllerServiceAnnotations | length() > 0
 
 - name: Adding --routers
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--routers', init.routers] }}"
-  when: init['routers'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--routers', skupper_init_kubernetes_routers] }}"
+  when: skupper_init_kubernetes_routers is defined
 
 - name: Adding --router-cpu
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--router-cpu', init.routerCpu] }}"
-  when: init['routerCpu'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--router-cpu', skupper_init_kubernetes_routerCpu] }}"
+  when: skupper_init_kubernetes_routerCpu is defined
 
 - name: Adding --router-memory
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--router-memory', init.routerMemory] }}"
-  when: init['routerMemory'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--router-memory', skupper_init_kubernetes_routerMemory] }}"
+  when: skupper_init_kubernetes_routerMemory is defined
 
 - name: Adding --router-cpu-limit
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--router-cpu-limit', init.routerCpuLimit] }}"
-  when: init['routerCpuLimit'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--router-cpu-limit', skupper_init_kubernetes_routerCpuLimit] }}"
+  when: skupper_init_kubernetes_routerCpuLimit is defined
 
 - name: Adding --router-memory-limit
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--router-memory-limit', init.routerMemoryLimit] }}"
-  when: init['routerMemoryLimit'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--router-memory-limit', skupper_init_kubernetes_routerMemoryLimit] }}"
+  when: skupper_init_kubernetes_routerMemoryLimit is defined
 
 - name: Adding --router-node-selector
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--router-node-selector', init.routerNodeSelector] }}"
-  when: init['routerNodeSelector'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--router-node-selector', skupper_init_kubernetes_routerNodeSelector] }}"
+  when: skupper_init_kubernetes_routerNodeSelector is defined
 
 - name: Adding --router-pod-affinity
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--router-pod-affinity', init.routerPodAffinity] }}"
-  when: init['routerPodAffinity'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--router-pod-affinity', skupper_init_kubernetes_routerPodAffinity] }}"
+  when: skupper_init_kubernetes_routerPodAffinity is defined
 
 - name: Adding --router-pod-antiaffinity
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--router-pod-antiaffinity', init.routerPodAntiaffinity] }}"
-  when: init['routerPodAntiaffinity'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--router-pod-antiaffinity', skupper_init_kubernetes_routerPodAntiaffinity] }}"
+  when: skupper_init_kubernetes_routerPodAntiaffinity is defined
 
 - name: Adding --router-ingress-host
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--router-ingress-host', init.routerIngressHost] }}"
-  when: init['routerIngressHost'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--router-ingress-host', skupper_init_kubernetes_routerIngressHost] }}"
+  when: skupper_init_kubernetes_routerIngressHost is defined
 
 - name: Adding --router-load-balancer-ip
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--router-load-balancer-ip', init.routerLoadBalancerIp] }}"
-  when: init['routerLoadBalancerIp'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--router-load-balancer-ip', skupper_init_kubernetes_routerLoadBalancerIp] }}"
+  when: skupper_init_kubernetes_routerLoadBalancerIp is defined
 
 - name: Adding --controller-cpu
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--controller-cpu', init.controllerCpu] }}"
-  when: init['controllerCpu'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--controller-cpu', skupper_init_kubernetes_controllerCpu] }}"
+  when: skupper_init_kubernetes_controllerCpu is defined
 
 - name: Adding --controller-memory
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--controller-memory', init.controllerMemory] }}"
-  when: init['controllerMemory'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--controller-memory', skupper_init_kubernetes_controllerMemory] }}"
+  when: skupper_init_kubernetes_controllerMemory is defined
 
 - name: Adding --controller-cpu-limit
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--controller-cpu-limit', init.controllerCpuLimit] }}"
-  when: init['controllerCpuLimit'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--controller-cpu-limit', skupper_init_kubernetes_controllerCpuLimit] }}"
+  when: skupper_init_kubernetes_controllerCpuLimit is defined
 
 - name: Adding --controller-memory-limit
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--controller-memory-limit', init.controllerMemoryLimit] }}"
-  when: init['controllerMemoryLimit'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--controller-memory-limit', skupper_init_kubernetes_controllerMemoryLimit] }}"
+  when: skupper_init_kubernetes_controllerMemoryLimit is defined
 
 - name: Adding --controller-node-selector
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--controller-node-selector', init.controllerNodeSelector] }}"
-  when: init['controllerNodeSelector'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--controller-node-selector', skupper_init_kubernetes_controllerNodeSelector] }}"
+  when: skupper_init_kubernetes_controllerNodeSelector is defined
 
 - name: Adding --controller-pod-affinity
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--controller-pod-affinity', init.controllerPodAffinity] }}"
-  when: init['controllerPodAffinity'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--controller-pod-affinity', skupper_init_kubernetes_controllerPodAffinity] }}"
+  when: skupper_init_kubernetes_controllerPodAffinity is defined
 
 - name: Adding --controller-pod-antiaffinity
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--controller-pod-antiaffinity', init.controllerPodAntiaffinity] }}"
-  when: init['controllerPodAntiaffinity'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--controller-pod-antiaffinity', skupper_init_kubernetes_controllerPodAntiaffinity] }}"
+  when: skupper_init_kubernetes_controllerPodAntiaffinity is defined
 
 - name: Adding --controller-ingress-host
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--controller-ingress-host', init.controllerIngressHost] }}"
-  when: init['controllerIngressHost'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--controller-ingress-host', skupper_init_kubernetes_controllerIngressHost] }}"
+  when: skupper_init_kubernetes_controllerIngressHost is defined
 
 - name: Adding --controller-load-balancer-ip
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--controller-load-balancer-ip', init.controllerLoadBalancerIp] }}"
-  when: init['controllerLoadBalancerIp'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--controller-load-balancer-ip', skupper_init_kubernetes_controllerLoadBalancerIp] }}"
+  when: skupper_init_kubernetes_controllerLoadBalancerIp is defined
 
 - name: Adding --config-sync-cpu
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--config-sync-cpu', init.configSyncCpu] }}"
-  when: init['configSyncCpu'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--config-sync-cpu', skupper_init_kubernetes_configSyncCpu] }}"
+  when: skupper_init_kubernetes_configSyncCpu is defined
 
 - name: Adding --config-sync-memory
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--config-sync-memory', init.configSyncMemory] }}"
-  when: init['configSyncMemory'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--config-sync-memory', skupper_init_kubernetes_configSyncMemory] }}"
+  when: skupper_init_kubernetes_configSyncMemory is defined
 
 - name: Adding --config-sync-cpu-limit
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--config-sync-cpu-limit', init.configSyncCpuLimit] }}"
-  when: init['configSyncCpuLimit'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--config-sync-cpu-limit', skupper_init_kubernetes_configSyncCpuLimit] }}"
+  when: skupper_init_kubernetes_configSyncCpuLimit is defined
 
 - name: Adding --config-sync-memory-limit
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--config-sync-memory-limit', init.configSyncMemoryLimit] }}"
-  when: init['configSyncMemoryLimit'] is defined
-
-- name: Adding --flow-collector-record-ttl
-  ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--flow-collector-record-ttl', init.flowCollectorRecordTtl] }}"
-  when: init['flowCollectorRecordTtl'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--config-sync-memory-limit', skupper_init_kubernetes_configSyncMemoryLimit] }}"
+  when: skupper_init_kubernetes_configSyncMemoryLimit is defined
 
 - name: Adding --flow-collector-cpu
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--flow-collector-cpu', init.flowCollectorCpu] }}"
-  when: init['flowCollectorCpu'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--flow-collector-cpu', skupper_init_kubernetes_flowCollectorCpu] }}"
+  when: skupper_init_kubernetes_flowCollectorCpu is defined
 
 - name: Adding --flow-collector-memory
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--flow-collector-memory', init.flowCollectorMemory] }}"
-  when: init['flowCollectorMemory'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--flow-collector-memory', skupper_init_kubernetes_flowCollectorMemory] }}"
+  when: skupper_init_kubernetes_flowCollectorMemory is defined
 
 - name: Adding --flow-collector-cpu-limit
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--flow-collector-cpu-limit', init.flowCollectorCpuLimit] }}"
-  when: init['flowCollectorCpuLimit'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--flow-collector-cpu-limit', skupper_init_kubernetes_flowCollectorCpuLimit] }}"
+  when: skupper_init_kubernetes_flowCollectorCpuLimit is defined
 
 - name: Adding --flow-collector-memory-limit
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--flow-collector-memory-limit', init.flowCollectorMemoryLimit] }}"
-  when: init['flowCollectorMemoryLimit'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--flow-collector-memory-limit', skupper_init_kubernetes_flowCollectorMemoryLimit] }}"
+  when: skupper_init_kubernetes_flowCollectorMemoryLimit is defined
 
 - name: Adding --external-prometheus-server
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--external-prometheus-server', init.externalPrometheusServer] }}"
-  when: init['externalPrometheusServer'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--external-prometheus-server', skupper_init_kubernetes_externalPrometheusServer] }}"
+  when: skupper_init_kubernetes_externalPrometheusServer is defined
 
 - name: Adding --prometheus-cpu
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--prometheus-cpu', init.prometheusCpu] }}"
-  when: init['prometheusCpu'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--prometheus-cpu', skupper_init_kubernetes_prometheusCpu] }}"
+  when: skupper_init_kubernetes_prometheusCpu is defined
 
 - name: Adding --prometheus-memory
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--prometheus-memory', init.prometheusMemory] }}"
-  when: init['prometheusMemory'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--prometheus-memory', skupper_init_kubernetes_prometheusMemory] }}"
+  when: skupper_init_kubernetes_prometheusMemory is defined
 
 - name: Adding --prometheus-cpu-limit
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--prometheus-cpu-limit', init.prometheusCpuLimit] }}"
-  when: init['prometheusCpuLimit'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--prometheus-cpu-limit', skupper_init_kubernetes_prometheusCpuLimit] }}"
+  when: skupper_init_kubernetes_prometheusCpuLimit is defined
 
 - name: Adding --prometheus-memory-limit
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--prometheus-memory-limit', init.prometheusMemoryLimit] }}"
-  when: init['prometheusMemoryLimit'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--prometheus-memory-limit', skupper_init_kubernetes_prometheusMemoryLimit] }}"
+  when: skupper_init_kubernetes_prometheusMemoryLimit is defined
 
 - name: Adding --prometheus-auth
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--prometheus-auth', init.prometheusAuth] }}"
-  when: init['prometheusAuth'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--prometheus-auth', skupper_init_kubernetes_prometheusAuth] }}"
+  when: skupper_init_kubernetes_prometheusAuth is defined
 
 - name: Adding --prometheus-user
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--prometheus-user', init.prometheusUser] }}"
-  when: init['prometheusUser'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--prometheus-user', skupper_init_kubernetes_prometheusUser] }}"
+  when: skupper_init_kubernetes_prometheusUser is defined
 
 - name: Adding --prometheus-password
   ansible.builtin.set_fact:
-    skupper_init_command: "{{ skupper_init_command + ['--prometheus-password', init.prometheusPassword] }}"
-  when: init['prometheusPassword'] is defined
+    skupper_init_command: "{{ skupper_init_command + ['--prometheus-password', skupper_init_kubernetes_prometheusPassword] }}"
+  when: skupper_init_kubernetes_prometheusPassword is defined
