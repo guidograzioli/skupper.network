@@ -1,7 +1,7 @@
 ---
 - name: "Validating ingress"
   ansible.builtin.fail:
-    msg: "Ingress host must be 'none' or 'external'"
+    msg: "Ingress must be 'none' or 'external'"
   when:
     - skupper_init_ingress not in ['none','external']
 

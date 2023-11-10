@@ -4,7 +4,7 @@
 # common flags
 #
 skupper_init_siteName: ""
-skupper_init_ingress: ""
+skupper_init_ingress: "none"
 skupper_init_routerMode: ""
 skupper_init_labels: []
 skupper_init_routerLogging: ""
